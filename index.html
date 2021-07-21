@@ -7,18 +7,46 @@
 
 <body>
     <div class="toy-body">
+        <!--CONTROL BAR START-->
         <div class="controls-bar">
-            <div class="buttons-left">
-
+            <div class="buttons-group buttons-left">
+                <div class="btn-container">
+                    <input type="color" id="color-picker" name="color-picker" value="#ff0000">
+                    <button class="btn btn-round"></button>
+                    <label for="color-picker" class="btn-label">Pick color</span>
+                </div>
+                <div class="btn-container">
+                    <button class="btn btn-round" id="random-color" name="random-color"></button>
+                    <label class="btn-label" for="random-color">Random color</span>
+                </div>
+                <div class="btn-container">
+                    <button class="btn btn-round" id="party-btn" name="party-btn"></button>
+                    <label class="btn-label" for="party-btn">Party!</span>
+                </div>
+                <div class="btn-container">
+                    <span class="btn-label switch-label">ON</span>
+                    <button class="btn btn-switch" id="light-switch">
+                        <div class="inner-switch">test</div>
+                    </button>
+                    <span class="btn-label switch-label">OFF</span>
+                </div>
             </div>
+
             <h1 class="heading">Lite Brite</h1>
-            <div class="buttons-right">
-                <button id="reset-button">Clear</button>
+
+            <div class="buttons-group buttons-right">
+                <div class="btn-container">
+                    <button class="btn btn-round" id="reset-button" name="clear"></button>
+                    <label class="btn-label" for="clear">Clear</span>
+                </div>
             </div>
         </div>
+        <!--CONTROL BAR END-->
 
+        <!--PEG GRID START-->
         <div class="grid-container">
         </div>
+        <!--PEG GRID END-->
     </div>
     <script src="scripts/main.js"></script>
 </body>
