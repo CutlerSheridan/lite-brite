@@ -12,10 +12,10 @@ TO-DO
 - optimize light toggle
 - warn before cropping image
 
-~~- make sure grid resizing isn't cutting off the far right edge~~
-~~- change to specific color~~
-~~- change to random color~~
-~~- clear pegs~~
-~~- turn light on/off~~
-~~- color picker doesn't end party~~
-~~- change color + fill on hover~~
+- ~~make sure grid resizing isn't cutting off the far right edge~~
+- ~~change to specific color~~
+- ~~change to random color~~
+- ~~clear pegs~~
+- ~~turn light on/off~~
+- ~~color picker doesn't end party~~
+- ~~change color + fill on hover~~
