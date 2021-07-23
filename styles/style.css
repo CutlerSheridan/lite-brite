@@ -1,6 +1,9 @@
 :root {
     --clr-black: rgb(22,22,22);
     --clr-border: darkgrey;
+    --btn-clr: orange;
+    --btn-clr-light: rgb(255, 198, 93);
+    --btn-clr-dark: rgb(180, 100, 2);
     --peg-size: 2.5rem;
     font-size: 10px;
     background: var(--clr-black);
@@ -51,12 +54,20 @@ body {
     width: 3rem;
     border: none;
     border-radius: 5rem;
-    background: orange;
+    background: var(--btn-clr);
+    box-shadow: 
+        inset .5rem .5rem .15rem var(--btn-clr-light), /* gloss */
+        -.1rem -.1rem .1rem var(--btn-clr), /* top highlight */
+        .1rem .1rem .1rem var(--btn-clr-dark); /* bottom lowlight */
 }
 .btn-round:active,
 .btn-round:focus {
-    background: darkorange;
+
     outline: none;
+    box-shadow: 
+        inset .5rem .5rem .25rem var(--btn-clr-dark), /* shadow */
+        -.1rem -.1rem .1rem var(--btn-clr), /* top highlight */
+        inset .1rem .1rem .1rem var(--btn-clr-light); /* bottom lowlight */
 }
 input[type=color] {
     position: relative;
@@ -69,15 +80,20 @@ input[type=color] {
 .btn-switch {
     height: 3rem;
     width: 1.5rem;
-    background: orange;
+    background: var(--btn-clr);
     border: none;
 }
 .btn-switch:focus {
     outline: none;
 }
+
 .heading {
     color: white;
     margin: 0 2rem;
+}
+
+.slider {
+    width: 100%;
 }
 /*--CONTROLS BAR END--*/
 

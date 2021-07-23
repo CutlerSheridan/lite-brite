@@ -1,5 +1,6 @@
 const gridContainer = document.querySelector(".grid-container");
 let pegBase = 25;
+let newPegBase;
 let pegHoles;
 let litColor = "rgb(255,0,0)";
 let unlitColor;
@@ -7,6 +8,7 @@ setUnlitColor(litColor);
 let partyIsOn = false;
 let lightIsOn = true;
 let placedPegs = [];
+let expanding;
 
 createGrid();
 const resetButton = document.querySelector("#reset-button");
@@ -26,32 +28,36 @@ const lightSwitch = document.querySelector("#light-switch");
 lightSwitch.addEventListener("click", toggleLight);
 
 const colorPicker = document.getElementById("color-picker")
-colorPicker.addEventListener("change", (e) => {
-    litColor = `rgb(${convertHexToRgbNums(e.target.value)}`;
+colorPicker.addEventListener("input", (e) => {
+    litColor = `rgb(${convertHexToRgbNums(e.target.value)})`;
     setUnlitColor(litColor);
+    endParty();
     console.log(litColor);
 });
 
-//colorPicker.addEventListener("click", () => {alert(e.target.value)});
+const slider = document.querySelector(".slider");
+slider.addEventListener("mouseup", alterGrid);
 
 // LOGIC FUNCTIONS START
 function createGrid() {
-    const totalPegs = pegBase * pegBase;
+    const totalPegs = pegBase ** 2;
     for (let i = 0; i < totalPegs; i++) {
-        const cell = document.createElement("div");
-        cell.classList.add("peg-hole");
-        gridContainer.appendChild(cell);
+        createHole(i);
     }
     gridContainer.style.gridTemplate = `repeat(${pegBase}, 1fr) / repeat(${pegBase}, 1fr)`;
     pegHoles = document.querySelectorAll(".peg-hole");
-    addListenersToHoles();
+    //addListenersToHoles();
+}
+function createHole(loc) {
+    const peg = document.createElement("div");
+    peg.classList.add("peg-hole");
+    gridContainer.childNodes[loc].after(peg);
+    addListenerToHole(peg);
 }
 
-function addListenersToHoles() {
-    pegHoles.forEach(peg => {
+function addListenerToHole(peg) {
         peg.addEventListener("mouseenter", insertPeg, {once: true});
         peg.addEventListener("mouseleave", lightPeg, {once: true});
-    });
 }
 
 function insertPeg() {
@@ -95,6 +101,45 @@ function light(peg) {
     }
 }
 
+function alterGrid(e) {
+    newPegBase = e.target.value;
+    const oldTotalPegs = pegBase ** 2;
+    const newTotalPegs = newPegBase ** 2;
+    const gridDiff = newPegBase - pegBase;
+    expanding = (gridDiff > 0 ? true : false);
+    if (newPegBase === pegBase) {
+        return;
+    }
+
+    gridContainer.style.gridTemplate = `repeat(${newPegBase}, 1fr) / repeat(${newPegBase}, 1fr)`;
+    const gridSizeDisplay = document.querySelector("#grid-size");
+    gridSizeDisplay.textContent = newPegBase + " x " + newPegBase;
+
+    const extra = gridDiff * (expanding ? newPegBase : pegBase) + gridDiff;
+    // this locates the final extant peg after removing all the
+    // extra stuff at the end IF REDUCING
+    const cornerIndex = (pegBase - newPegBase) * (newPegBase - 1) + newTotalPegs;
+    addOrRemoveHoles(extra, (expanding ? oldTotalPegs : cornerIndex + 1));
+    for (let i = (expanding ? oldTotalPegs - 1 : cornerIndex); i > 0; i--) {
+        if (i % pegBase === 0) {
+            addOrRemoveHoles(gridDiff, (expanding ? i : i - (pegBase - newPegBase + 1)));
+        }
+    }
+    pegHoles = document.querySelectorAll(".peg-hole");
+    pegBase = newPegBase;
+}
+function addOrRemoveHoles(numOfHoles, loc) {
+    if (expanding) {
+        for (let i = 0; i < numOfHoles; i++) {
+            createHole(loc);
+        }
+    } else {
+        for (let i = 0; i > numOfHoles; i--) {
+            gridContainer.removeChild(gridContainer.childNodes[loc]);
+        }
+    }
+}
+
 function clearBoard() {
     placedPegs.forEach(peg => {
         peg.classList.remove("peg-lit");
@@ -105,7 +150,7 @@ function clearBoard() {
         peg.classList.remove("peg-unlit");
     });
     placedPegs = [];
-    addListenersToHoles();
+    pegHoles.forEach(peg => addListenerToHole(peg));
 }
 
 function randomizeColor() {
