@@ -2,7 +2,7 @@
     --clr-black: rgb(22,22,22);
     --clr-border: darkgrey;
     --btn-clr: orange;
-    --btn-clr-light: rgb(255, 198, 93);
+    --btn-clr-light: rgb(252, 190, 77);
     --btn-clr-dark: rgb(180, 100, 2);
     --peg-size: 2.5rem;
     font-size: 10px;
@@ -58,16 +58,21 @@ body {
     box-shadow: 
         inset .5rem .5rem .15rem var(--btn-clr-light), /* gloss */
         -.1rem -.1rem .1rem var(--btn-clr), /* top highlight */
-        .1rem .1rem .1rem var(--btn-clr-dark); /* bottom lowlight */
+        .1rem .1rem .1rem var(--btn-clr-dark), /* bottom lowlight */
+        0 0 0 .2rem black; /* outer shadow */
 }
+
 .btn-round:active,
-.btn-round:focus {
+.btn-round:focus:not(#reset-button:focus) {
 
     outline: none;
     box-shadow: 
         inset .5rem .5rem .25rem var(--btn-clr-dark), /* shadow */
         -.1rem -.1rem .1rem var(--btn-clr), /* top highlight */
         inset .1rem .1rem .1rem var(--btn-clr-light); /* bottom lowlight */
+}
+#reset-button:focus {
+    outline: none;
 }
 input[type=color] {
     position: relative;
@@ -90,6 +95,7 @@ input[type=color] {
 .heading {
     color: white;
     margin: 0 2rem;
+    letter-spacing: .2rem;
 }
 
 .slider {
@@ -111,10 +117,7 @@ input[type=color] {
     border-radius: 3rem;
     background-color: black;
     background-clip: content-box;
-    transition: all .04s;
-    /* maybe make it so the transition
-    is only when the light is
-    turned off or on */
+    transition: all .07s;
 }
 .peg-unlit {
     border-color: blue;

@@ -1,5 +1,5 @@
 const gridContainer = document.querySelector(".grid-container");
-let pegBase = 25;
+let pegBase;
 let newPegBase;
 let pegHoles;
 let litColor = "rgb(255,0,0)";
@@ -10,7 +10,7 @@ let lightIsOn = true;
 let placedPegs = [];
 let expanding;
 
-createGrid();
+
 const resetButton = document.querySelector("#reset-button");
 resetButton.addEventListener("click", clearBoard);
 
@@ -36,7 +36,13 @@ colorPicker.addEventListener("input", (e) => {
 });
 
 const slider = document.querySelector(".slider");
+pegBase = slider.value;
+const gridSizeDisplay = document.querySelector("#grid-size");
+gridSizeDisplay.textContent = `${slider.value} x ${slider.value}`;
 slider.addEventListener("mouseup", alterGrid);
+slider.addEventListener("input", (e) => {document.querySelector("#grid-size").textContent = `${e.target.value} x ${e.target.value}`});
+
+createGrid();
 
 // LOGIC FUNCTIONS START
 function createGrid() {
@@ -112,17 +118,25 @@ function alterGrid(e) {
     }
 
     gridContainer.style.gridTemplate = `repeat(${newPegBase}, 1fr) / repeat(${newPegBase}, 1fr)`;
-    const gridSizeDisplay = document.querySelector("#grid-size");
-    gridSizeDisplay.textContent = newPegBase + " x " + newPegBase;
 
     const extra = gridDiff * (expanding ? newPegBase : pegBase) + gridDiff;
     // this locates the final extant peg after removing all the
     // extra stuff at the end IF REDUCING
     const cornerIndex = (pegBase - newPegBase) * (newPegBase - 1) + newTotalPegs;
-    addOrRemoveHoles(extra, (expanding ? oldTotalPegs : cornerIndex + 1));
-    for (let i = (expanding ? oldTotalPegs - 1 : cornerIndex); i > 0; i--) {
-        if (i % pegBase === 0) {
-            addOrRemoveHoles(gridDiff, (expanding ? i : i - (pegBase - newPegBase + 1)));
+
+    if (expanding) {
+        addOrRemoveHoles(extra, oldTotalPegs);
+        for (let i = oldTotalPegs - 1; i > 0; i--) {
+            if (i % pegBase === 0) {
+                addOrRemoveHoles(gridDiff, i);
+            }
+        }
+    } else {
+        addOrRemoveHoles(extra, cornerIndex + 1);
+        for (let i = cornerIndex; i > 0; i--) {
+            if (i % pegBase === 0) {
+                addOrRemoveHoles(gridDiff, i - (pegBase - newPegBase) + 1);
+            }
         }
     }
     pegHoles = document.querySelectorAll(".peg-hole");
