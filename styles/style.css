@@ -2,10 +2,10 @@
     --clr-black: rgb(22,22,22);
     --clr-border: darkgrey;
     --btn-clr: orange;
-    --btn-clr-light: rgb(252, 190, 77);
+    --btn-clr-light: rgb(255, 199, 94);
     --btn-clr-dark: rgb(180, 100, 2);
     --peg-size: 2.5rem;
-    font-size: 10px;
+    font-size: 62.5%;
     background: var(--clr-black);
 }
 * {
@@ -18,6 +18,7 @@ body {
     height: 100%;
     width: 100%;
     overflow: hidden;
+    font-family: Helvetica, sans-serif;
 }
 
 .toy-body {
@@ -42,6 +43,11 @@ body {
     display: flex;
     align-items: flex-end;
 }
+button,
+label,
+input[type="color"] {
+    cursor: pointer;
+}
 
 .btn-container {
     display: flex;
@@ -63,8 +69,9 @@ body {
 }
 
 .btn-round:active,
-.btn-round:focus:not(#reset-button:focus) {
-
+.btn-round:focus:not(#reset-button:focus),
+input[type="color"]:active + .btn-round,
+input[type="color"]:focus + .btn-round {
     outline: none;
     box-shadow: 
         inset .5rem .5rem .25rem var(--btn-clr-dark), /* shadow */
@@ -83,23 +90,57 @@ input[type=color] {
     opacity: 0;
 }
 .btn-switch {
+    display: none;
+}
+.switch {
+    position: relative;
     height: 3rem;
     width: 1.5rem;
-    background: var(--btn-clr);
-    border: none;
+    background: var(--btn-clr-dark);
+    border: .3rem solid var(--btn-clr-light);
 }
-.btn-switch:focus {
-    outline: none;
+.switch::before {
+    content: "";
+    position: absolute;
+    top: 1.5rem;
+    height: .7rem;
+    width: .7rem;
+    margin: .1rem;
+    background: var(--btn-clr-light);
+    transition: all .05s linear;
 }
-
+.switch-on::before {
+    top: 0;
+}
 .heading {
     color: white;
     margin: 0 2rem;
+    font-size: 5rem;
     letter-spacing: .2rem;
+    font-weight: bold;
 }
 
 .slider {
+    -webkit-appearance: none;
     width: 100%;
+    height: 1rem;
+    margin: .7rem;
+    background: var(--btn-clr-dark);
+    border: .3rem solid var(--btn-clr-light);
+    border-radius: 1rem;
+    outline: none;
+}
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1rem;
+    height: 2.5rem;
+    background-image: linear-gradient(to bottom right, var(--btn-clr-light), var(--btn-clr));
+    box-shadow: 
+        inset 0rem .5rem .15rem var(--btn-clr-light),
+        0 .1rem .1rem var(--btn-clr-dark),
+        .1rem 0 .1rem var(--btn-clr-dark),
+        .1rem .1rem .1rem var(--btn-clr-dark);
+    cursor: pointer;
 }
 /*--CONTROLS BAR END--*/
 
@@ -117,7 +158,7 @@ input[type=color] {
     border-radius: 3rem;
     background-color: black;
     background-clip: content-box;
-    transition: all .07s;
+    /* transition: all .07s; */
 }
 .peg-unlit {
     border-color: blue;

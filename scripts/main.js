@@ -120,9 +120,6 @@ function alterGrid(e) {
     gridContainer.style.gridTemplate = `repeat(${newPegBase}, 1fr) / repeat(${newPegBase}, 1fr)`;
 
     const extra = gridDiff * (expanding ? newPegBase : pegBase) + gridDiff;
-    // this locates the final extant peg after removing all the
-    // extra stuff at the end IF REDUCING
-    const cornerIndex = (pegBase - newPegBase) * (newPegBase - 1) + newTotalPegs;
 
     if (expanding) {
         addOrRemoveHoles(extra, oldTotalPegs);
@@ -132,6 +129,9 @@ function alterGrid(e) {
             }
         }
     } else {
+        // this locates the final extant peg after removing all the
+        // extra stuff at the end IF REDUCING
+        const cornerIndex = (pegBase - newPegBase) * (newPegBase - 1) + newTotalPegs;
         addOrRemoveHoles(extra, cornerIndex + 1);
         for (let i = cornerIndex; i > 0; i--) {
             if (i % pegBase === 0) {
@@ -209,20 +209,19 @@ function endParty() {
 }
 
 function toggleLight() {
+    lightIsOn = !lightIsOn;
     placedPegs.forEach(peg => {
         let pegColor = getComputedStyle(peg).backgroundColor;
-        if (peg.classList.contains("peg-lit")) {
-            lightIsOn = false;
+        if (!this.checked) {
             peg.classList.remove("peg-lit");
             setUnlitColor(pegColor);
-            console.log(pegColor);
             unlight(peg);
-        } else if (peg.classList.contains("peg-unlit")) {
-            lightIsOn = true;
+        } else if (this.checked) {
             litColor = `rgb(${extractColorNums(pegColor)})`;
             light(peg);
         }
-    })
+    });
+    document.querySelector(".switch").classList.toggle("switch-on");
 }
 // LOGIC FUNCTIONS END
 

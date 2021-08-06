@@ -24,11 +24,10 @@
                     <label class="btn-label" for="party-btn">Party!</label>
                 </div>
                 <div class="btn-container">
-                    <span class="btn-label switch-label">ON</span>
-                    <button class="btn btn-switch" id="light-switch">
-                        <div class="inner-switch"></div>
-                    </button>
-                    <span class="btn-label switch-label">OFF</span>
+                    <label class="btn-label switch-label" for="light-switch">ON</label>
+                    <input type="checkbox" class="btn btn-switch" id="light-switch" name="light-switch" checked>
+                    <label class="switch switch-on" for="light-switch"></label>
+                    <label class="btn-label switch-label" for="light-switch">OFF</label>
                 </div>
             </div>
 
@@ -40,7 +39,7 @@
                     <label class="btn-label" for="clear">Clear</span>
                 </div>
                 <div class="btn-container">
-                    <span class="slider-range">1''''25''''50''''75''''100</span>
+                    <span class="slider-range"> 1 - 25 - 50 - 75 - 100</span>
                     <input type="range" min="1" max="100" value="20" class="slider" name="slider">
                     <label class="btn-label" for="slider">Grid size: <span id="grid-size">25 x 25</span></label>
                 </div>
