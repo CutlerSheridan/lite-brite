@@ -106,7 +106,7 @@ input[type=color] {
     height: .7rem;
     width: .7rem;
     margin: .1rem;
-    background: var(--btn-clr-light);
+    background-image: linear-gradient(to bottom right, var(--btn-clr-light), var(--btn-clr));
     transition: all .05s linear;
 }
 .switch-on::before {
