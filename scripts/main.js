@@ -52,7 +52,7 @@ function createGrid() {
     }
     gridContainer.style.gridTemplate = `repeat(${pegBase}, 1fr) / repeat(${pegBase}, 1fr)`;
     pegHoles = document.querySelectorAll(".peg-hole");
-    //addListenersToHoles();
+    resizeHoles();
 }
 function createHole(loc) {
     const peg = document.createElement("div");
@@ -141,6 +141,7 @@ function alterGrid(e) {
     }
     pegHoles = document.querySelectorAll(".peg-hole");
     pegBase = newPegBase;
+    resizeHoles();
 }
 function addOrRemoveHoles(numOfHoles, loc) {
     if (expanding) {
@@ -152,6 +153,44 @@ function addOrRemoveHoles(numOfHoles, loc) {
             gridContainer.removeChild(gridContainer.childNodes[loc]);
         }
     }
+}
+function resizeHoles() {
+    const pegHole = document.querySelector(".peg-hole");
+    const pegHoleInnerWidth = pegHole.clientWidth;
+    const pegHoleStyle = getComputedStyle(pegHole);
+    const pegHoleWidth = parseInt(pegHoleStyle.borderLeftWidth) + pegHoleInnerWidth + parseInt(pegHoleStyle.borderRightWidth);
+
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const windowShort = windowWidth > windowHeight ? windowHeight : windowWidth; 
+
+    const gridWidth = gridContainer.clientWidth;
+    const gridHeight = gridContainer.clientHeight;
+    const gridShortSide = gridWidth > gridHeight ? gridHeight : gridWidth;
+    const gridStyle = getComputedStyle(gridContainer);
+    const gridMinSide = pegHoleWidth * pegBase;
+
+    const gridVisibleHeight = windowHeight - document.querySelector(".controls-bar").clientHeight - 110;
+    const gridVisibleWidth = windowWidth - (parseInt(gridStyle.marginLeft) + parseInt(gridStyle.marginRight)) - 20;
+    const gridVisibleShortSide = gridVisibleWidth > gridVisibleHeight ? gridVisibleHeight : gridVisibleWidth;
+
+    console.log(pegHoleWidth);
+    console.log(`grid container width: ${gridWidth}`);
+    console.log(`grid visible width: ${gridVisibleWidth}`);
+    console.log(`\ngrid container height: ${gridHeight}`);
+    console.log(`grid visible height: ${gridVisibleHeight}`);
+    console.log(`\ngrid container short side: ${gridShortSide}`);
+    console.log(`grid visible short side: ${gridVisibleShortSide}`);
+    console.log(`peg grid min. length: ${gridMinSide}`);
+
+    let newPegSize = gridVisibleShortSide / pegBase;
+    if (newPegSize > 25) {
+        newPegSize = 25;
+    } else if (newPegSize < 14) {
+        newPegSize = 14;
+    }
+    const root = document.querySelector(":root");
+    root.style.setProperty("--peg-size", `${newPegSize / 10}rem`);
 }
 
 function clearBoard() {
