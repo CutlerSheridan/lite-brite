@@ -1,6 +1,7 @@
 :root {
     --clr-black: rgb(22,22,22);
-    --clr-border: darkgrey;
+    --clr-border: rgb(219, 219, 219);
+    --clr-grey-dark: rgb(75,75,75);
     --btn-clr: orange;
     --btn-clr-light: rgb(255, 199, 94);
     --btn-clr-dark: rgb(180, 100, 2);
@@ -42,14 +43,25 @@ body {
 .buttons-group {
     display: flex;
     align-items: flex-end;
+    height: 8.4rem;
 }
 button,
 label,
 input[type="color"] {
     cursor: pointer;
 }
+label,
+span {
+    font-family: "Heebo", sans-serif;
+    text-shadow: .1rem .1rem .1rem var(--clr-grey-dark);
+}
+.switch-label,
+.slider-label {
+    font-size: 1.7rem;
+}
 
 .btn-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -82,8 +94,8 @@ input[type="color"]:focus + .btn-round {
     outline: none;
 }
 input[type=color] {
-    position: relative;
-    top: 3rem;
+    position: absolute;
+    top: 0;
     height: 3rem;
     width: 3rem;
     border-radius: 5rem;
@@ -94,10 +106,15 @@ input[type=color] {
 }
 .switch {
     position: relative;
+    margin: .2rem 0;
     height: 3rem;
     width: 1.5rem;
     background: var(--btn-clr-dark);
     border: .3rem solid var(--btn-clr-light);
+    box-shadow: 
+        .1rem 0 .1rem var(--btn-clr-dark),
+        .1rem .1rem .1rem var(--btn-clr-dark),
+        0 .1rem .1rem var(--btn-clr-dark);
 }
 .switch::before {
     content: "";
@@ -118,17 +135,29 @@ input[type=color] {
     font-size: 5rem;
     letter-spacing: .2rem;
     font-weight: bold;
+    font-family: "Exo", cursive;
+    text-shadow: 
+        .2rem 0 .1rem var(--clr-grey-dark),
+        .2rem .2rem .1rem var(--clr-grey-dark),
+        0 .2rem .1rem var(--clr-grey-dark);
 }
 
+#slider-container {
+    align-self: center;
+}
 .slider {
     -webkit-appearance: none;
     width: 100%;
     height: 1rem;
-    margin: .7rem;
+    margin: .7rem 0 .8rem 0;
     background: var(--btn-clr-dark);
     border: .3rem solid var(--btn-clr-light);
     border-radius: 1rem;
     outline: none;
+    box-shadow: 
+        .1rem 0 .1rem var(--btn-clr-dark),
+        .1rem .1rem .1rem var(--btn-clr-dark),
+        0 .1rem .1rem var(--btn-clr-dark);
 }
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -141,6 +170,41 @@ input[type=color] {
         .1rem 0 .1rem var(--btn-clr-dark),
         .1rem .1rem .1rem var(--btn-clr-dark);
     cursor: pointer;
+}
+.slider::-moz-range-thumb {
+    width: 1rem;
+    height: 2.5rem;
+    background-image: linear-gradient(to bottom right, var(--btn-clr-light), var(--btn-clr));
+    box-shadow: 
+        inset 0rem .5rem .15rem var(--btn-clr-light),
+        0 .1rem .1rem var(--btn-clr-dark),
+        .1rem 0 .1rem var(--btn-clr-dark),
+        .1rem .1rem .1rem var(--btn-clr-dark);
+    cursor: pointer;
+}
+
+#credit {
+    position: absolute;
+    left: 2rem;
+    top: 90vh;
+    display: flex;
+    flex-direction: column;
+    width: 13rem;
+    height: 4rem;
+    background-image: url("../images/tape.png");
+    background-position: center;
+    background-size: 13rem 4rem;
+    background-repeat: no-repeat;
+}
+.credit-link {
+    margin: auto;
+    width: 11rem;
+    justify-items: center;
+    line-height: 1.5rem;
+    font-size: 1.3rem;
+    font-family: "Permanent Marker";
+    color: rgb(36, 36, 202);
+    text-decoration: none;
 }
 /*--CONTROLS BAR END--*/
 

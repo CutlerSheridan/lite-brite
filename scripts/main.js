@@ -10,7 +10,6 @@ let lightIsOn = true;
 let placedPegs = [];
 let expanding;
 
-
 const resetButton = document.querySelector("#reset-button");
 resetButton.addEventListener("click", clearBoard);
 
@@ -41,6 +40,9 @@ const gridSizeDisplay = document.querySelector("#grid-size");
 gridSizeDisplay.textContent = `${slider.value} x ${slider.value}`;
 slider.addEventListener("mouseup", alterGrid);
 slider.addEventListener("input", (e) => {document.querySelector("#grid-size").textContent = `${e.target.value} x ${e.target.value}`});
+
+//const credit = document.querySelector("#credit");
+//credit.style.top = `${(window.innerHeight - credit.clientHeight - 40) * .1}rem`;
 
 createGrid();
 
@@ -157,8 +159,8 @@ function addOrRemoveHoles(numOfHoles, loc) {
 function resizeHoles() {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
+    
     const gridStyle = getComputedStyle(gridContainer);
-
     const gridVisibleHeight = windowHeight - document.querySelector(".controls-bar").clientHeight - 110;
     const gridVisibleWidth = windowWidth - (parseInt(gridStyle.marginLeft) + parseInt(gridStyle.marginRight)) - 20;
     const gridVisibleShortSide = gridVisibleWidth > gridVisibleHeight ? gridVisibleHeight : gridVisibleWidth;
