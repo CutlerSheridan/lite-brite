@@ -9,6 +9,7 @@
 - make credit placement responsive (add listener so every time window is resized it calculates where to put it?)
 - warn before cropping image
 - make mobile-friendly
+- add sounds for inserting pegs and/or turning light off/on
 
 ### (probably not do)
 - optimize light toggle // maybe this is done?
